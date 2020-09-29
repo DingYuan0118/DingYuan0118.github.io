@@ -1,6 +1,13 @@
 # Python学习笔记
 
-[[TOC]]
+
+- [Python学习笔记](#python学习笔记)
+    - [迭代器（iterator）与生成器（generator）](#迭代器iterator与生成器generator)
+    - [dataloader与dataset](#dataloader与dataset)
+
+
+
+
 ## 迭代器（iterator）与生成器（generator）
 - 迭代器：指实现了`__next__()`与`__iter__()`方法的对象
 - 生成器：生成器的建立有两种方式：
@@ -55,7 +62,7 @@ isinstance(obj, Iterable)
 isgenerator(obj)
 ```
 
- ## dataloader与dataset
+## dataloader与dataset
 - dataloader与dataset之间的调用关系如图
 ![dataloader and dataset](../images/dataloader.jpg)
 其中`Sample`是`iterable`对象，其`__iter__()`方法返回一个`iterator`对象，`torch.utils.data.Dataloader`通过调用`next(iter(Sample))`得到`indices`。再通过调用`dataset[indices]`得到数据流。
