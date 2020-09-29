@@ -19,6 +19,7 @@
             for i in range(num):
                 yield i
     ```
+
   生成器也具有`__next__()`与`__iter__()`方法，是迭代器的一种。使用迭代的方式能够将数据作为数据流读入，防止同时占用大量内存。
  
   需要注意`iterable`与`iterator`区别，只包含`__iter__()`方法的对象不是`iterator`，但是是`iterable`对象，可以使用`for,list`等方式读取，因为其`__iter__()`方法可以返回`iterator`对象。
@@ -51,16 +52,18 @@
     File "<stdin>", line 1, in <module>
   StopIteration
   ```
+
   > 廖雪峰的[python教程](https://www.liaoxuefeng.com/wiki/1016959663602400/1017318207388128)
 - 迭代器与生成器的判别方法：
-```python
-from collections.abc import Iterator, Iterable
-from inspect import isgenerator
 
-isinstance(obj, Iterator)
-isinstance(obj, Iterable)
-isgenerator(obj)
-```
+  ```python
+  from collections.abc import Iterator, Iterable
+  from inspect import isgenerator
+
+  isinstance(obj, Iterator)
+  isinstance(obj, Iterable)
+  isgenerator(obj)
+  ```
 
 ## dataloader与dataset
 - dataloader与dataset之间的调用关系如图
@@ -68,6 +71,7 @@ isgenerator(obj)
 其中`Sample`是`iterable`对象，其`__iter__()`方法返回一个`iterator`对象，`torch.utils.data.Dataloader`通过调用`next(iter(Sample))`得到`indices`。再通过调用`dataset[indices]`得到数据流。
 
   源码如下
+
   ```python
   class DataLoader(object):
       ...
@@ -80,4 +84,5 @@ isgenerator(obj)
                   batch = _utils.pin_memory.pin_memory_batch(batch)
               return batch
   ```
+  
   > pytorch 1.0 document，高版本的dataloader将`__next__()`方法去除了，实现更为复杂，但流程相同。
