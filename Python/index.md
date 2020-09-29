@@ -68,7 +68,8 @@
 ## dataloader与dataset
 - dataloader与dataset之间的调用关系如图
 ![dataloader and dataset](../images/dataloader.jpg)
-其中`Sample`是`iterable`对象，其`__iter__()`方法返回一个`iterator`对象，`torch.utils.data.Dataloader`通过调用`next(iter(Sample))`得到`indices`。再通过调用`dataset[indices]`得到数据流。
+
+  其中`Sample`是`iterable`对象，其`__iter__()`方法返回一个`iterator`对象，`torch.utils.data.Dataloader`通过调用`next(iter(Sample))`得到`indices`。再通过调用`dataset[indices]`得到数据流。
 
   源码如下
 
