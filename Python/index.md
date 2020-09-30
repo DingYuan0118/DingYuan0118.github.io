@@ -5,6 +5,8 @@
     - [迭代器（iterator）与生成器（generator）](#迭代器iterator与生成器generator)
     - [dataloader与dataset](#dataloader与dataset)
     - [File open文件操作](#file-open文件操作)
+    - [HDF5 数据文件操作](#hdf5-数据文件操作)
+
 
 
 
@@ -99,3 +101,13 @@
 - `file.seek(offset[, whence])`方法用于移动文件读取指针到指定位置。
   - offset -- 开始的偏移量，也就是代表需要移动偏移的字节数
   - whence：可选，默认值为 0。给offset参数一个定义，表示要从哪个位置开始偏移；0代表从文件开头开始算起，1代表从当前位置开始算起，2代表从文件末尾算起。
+  > [菜鸟编程](https://www.runoob.com/python3/python3-file-methods.html)
+
+## HDF5 数据文件操作
+- The most fundamental thing to remember when using h5py is:
+  Groups work like dictionaries, and datasets work like NumPy arrays
+- `HDF`表示`Hierarchical Data Format`,即结构化数据矩阵。
+  > [`HDF5`文档](https://docs.h5py.org/en/stable/quick.html#quick)
+- `h5py.File(filename, mode)`用于打开`HDF5`文件
+- `File.create_dataset(name, shape, dtype)`用于创建数据集`dataset`,返回`dataset`对象
+- `File.create_group(name)`用于创建群组`group`,返回`group`对象
