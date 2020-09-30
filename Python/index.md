@@ -4,6 +4,7 @@
 - [Python学习笔记](#python学习笔记)
     - [迭代器（iterator）与生成器（generator）](#迭代器iterator与生成器generator)
     - [dataloader与dataset](#dataloader与dataset)
+    - [File open](#file-open)
 
 
 
@@ -86,3 +87,13 @@
   ```
   
   > pytorch 1.0 document，高版本的dataloader将`__next__()`方法去除了，实现更为复杂，但流程相同。
+
+## File open文件操作
+- `file.write(str)`写入字符串
+- `file.writelines(sequence)`写入序列字符串列表
+- `file.next()`返回文件下一行
+- `file.readline([size])`读取整行
+- `file.readlines([sizeint])`读取所有行并返回列表，若给定`sizeint>0`，则是设置一次读多少字节，这是为了减轻读取压力。
+- `file.seek(offset[, whence])`方法用于移动文件读取指针到指定位置。
+  - offset -- 开始的偏移量，也就是代表需要移动偏移的字节数
+  - whence：可选，默认值为 0。给offset参数一个定义，表示要从哪个位置开始偏移；0代表从文件开头开始算起，1代表从当前位置开始算起，2代表从文件末尾算起。
