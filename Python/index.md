@@ -111,3 +111,7 @@
 - `h5py.File(filename, mode)`用于打开`HDF5`文件
 - `File.create_dataset(name, shape, dtype)`用于创建数据集`dataset`,返回`dataset`对象
 - `File.create_group(name)`用于创建群组`group`,返回`group`对象
+
+## glob文件搜索
+- `glob.glob(pathname, *, recursive=False)`返回匹配`pathname`路径名列表，可以为空
+- `glob.iglob(pathname, *, recursive=False)`返回匹配`pathname`路径名迭代器，可以为空
