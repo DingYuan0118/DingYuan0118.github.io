@@ -1,12 +1,12 @@
 # Python学习笔记
 
 
+
 - [Python学习笔记](#python学习笔记)
     - [迭代器（iterator）与生成器（generator）](#迭代器iterator与生成器generator)
-    - [dataloader与dataset](#dataloader与dataset)
     - [File open文件操作](#file-open文件操作)
     - [HDF5 数据文件操作](#hdf5-数据文件操作)
-
+    - [glob文件搜索](#glob文件搜索)
 
 
 
@@ -67,30 +67,6 @@
   isinstance(obj, Iterable)
   isgenerator(obj)
   ```
-
-## dataloader与dataset
-- dataloader与dataset之间的调用关系如图
-![dataloader and dataset](../images/dataloader.jpg)
-  > 图参考[https://zhuanlan.zhihu.com/p/76893455](https://zhuanlan.zhihu.com/p/76893455)
-
-  其中`Sample`是`iterable`对象，其`__iter__()`方法返回一个`iterator`对象，`torch.utils.data.Dataloader`通过调用`next(iter(Sample))`得到`indices`。再通过调用`dataset[indices]`得到数据流。
-
-  源码如下
-
-  ```python
-  class DataLoader(object):
-      ...
-      
-      def __next__(self):
-          if self.num_workers == 0:  
-              indices = next(self.sample_iter)  # Sampler
-              batch = self.collate_fn([self.dataset[i] for i in indices]) # Dataset
-              if self.pin_memory:
-                  batch = _utils.pin_memory.pin_memory_batch(batch)
-              return batch
-  ```
-  
-  > pytorch 1.0 document，高版本的dataloader将`__next__()`方法去除了，实现更为复杂，但流程相同。
 
 ## File open文件操作
 - `file.write(str)`写入字符串
