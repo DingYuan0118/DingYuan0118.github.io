@@ -28,7 +28,6 @@
 
 ## CUDA的使用
 - `pytorch`中无论模型的参数还是数据均以`tensor`的形式存储。`tensor`的运算均需要运算数在同一设备中，否则将会报错。
-
   ```python
   import torch
   a = torch.tensor([1,2,3,4], device=torch.device('cuda'))
@@ -49,5 +48,4 @@
   c
 
   >>>tensor([3, 5, 7, 9], device='cuda:0')
-
   ```
