@@ -95,6 +95,7 @@
 
 ## assert断言语句
 - `assert "expression1"[, "expression2"]`在`expression1`不满足时，输出`expression2`。
+
   ```py
   assert 1==2 , "value error"
 
