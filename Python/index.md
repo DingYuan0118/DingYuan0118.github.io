@@ -91,3 +91,18 @@
 ## glob文件搜索
 - `glob.glob(pathname, *, recursive=False)`返回匹配`pathname`路径名列表，可以为空
 - `glob.iglob(pathname, *, recursive=False)`返回匹配`pathname`路径名迭代器，可以为空
+
+
+## assert断言语句
+- `assert "expression1"[, "expression2"]`在`expression1`不满足时，输出`expression2`。
+  ```py
+  assert 1==2 , "value error"
+
+  ---------------------------------------------------------------------------
+  AssertionError                            Traceback (most recent call last)
+  <ipython-input-1-a43ee3a2371b> in <module>
+  ----> 1 assert 1==2 , "value error"
+
+  AssertionError: value error
+  ```
+
