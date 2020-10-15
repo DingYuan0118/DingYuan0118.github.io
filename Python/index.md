@@ -7,7 +7,9 @@
     - [glob文件搜索](#glob文件搜索)
     - [assert断言语句](#assert断言语句)
 
-\[ a+b =c\]
+$$
+a+b=c
+$$
 
 
 ## 迭代器（iterator）与生成器（generator）
