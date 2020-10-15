@@ -1,15 +1,12 @@
 # Python学习笔记
 
 - [Python学习笔记](#python学习笔记)
-    - [迭代器（iterator）与生成器（generator）](#迭代器iterator与生成器generator)
-    - [File open文件操作](#file-open文件操作)
-    - [HDF5 数据文件操作](#hdf5-数据文件操作)
-    - [glob文件搜索](#glob文件搜索)
-    - [assert断言语句](#assert断言语句)
+  - [迭代器（iterator）与生成器（generator）](#迭代器iterator与生成器generator)
+  - [File open文件操作](#file-open文件操作)
+  - [HDF5 数据文件操作](#hdf5-数据文件操作)
+  - [glob文件搜索](#glob文件搜索)
+  - [assert断言语句](#assert断言语句)
 
-\[
-a+b=c
-\]
 
 
 ## 迭代器（iterator）与生成器（generator）
