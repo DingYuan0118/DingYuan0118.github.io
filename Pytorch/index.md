@@ -1,8 +1,9 @@
 # Pytorch学习笔记
 
 - [Pytorch学习笔记](#pytorch学习笔记)
-    - [dataloader与dataset](#dataloader与dataset)
-    - [CUDA的使用](#cuda的使用)
+  - [dataloader与dataset](#dataloader与dataset)
+  - [CUDA的使用](#cuda的使用)
+  - [Batchnormal层的使用](#batchnormal层的使用)
 
 ## dataloader与dataset
 - dataloader与dataset之间的调用关系如图
@@ -52,3 +53,11 @@
 
   >>>tensor([3, 5, 7, 9], device='cuda:0')
   ```
+
+## Batchnormal层的使用
+
+- `torch.nn.BatchNorm2d(num_features, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)`  
+针对每个channel，给一组映射参数$\alpha$, $\beta$, 长度为`C`
+    - **num_features** —— C from an expected input of size `(N,C,H,W)`
+    - **affine** —— a boolean value that when set to True, this module has learnable affine parameters. Default: `True`
+    - **track_running_stats** —— a boolean value that when set to `True`, this module tracks the running mean and variance, and when set to `False`, this module does not track such statistics and uses batch statistics instead in both training and eval modes if the running mean and variance are None. Default: `True`  
