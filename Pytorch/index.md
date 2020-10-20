@@ -4,6 +4,7 @@
   - [dataloader与dataset](#dataloader与dataset)
   - [CUDA的使用](#cuda的使用)
   - [Batchnormal层的使用](#batchnormal层的使用)
+  - [ResNet解析](#resnet解析)
 
 ## dataloader与dataset
 - dataloader与dataset之间的调用关系如图
@@ -55,7 +56,7 @@
   ```
 
 ## Batchnormal层的使用
-
+具体原理参考[Juliuszh的高赞文章](https://zhuanlan.zhihu.com/p/33173246)
 - `torch.nn.BatchNorm2d(num_features, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)`  
 针对每个channel，给一组映射参数$\alpha$, $\beta$, 长度为`C`
     - **num_features** - C from an expected input of size `(N,C,H,W)`
@@ -85,3 +86,22 @@
   >>> torch.Size([20, 100, 35, 45])
   >>> torch.Size([20, 100, 35, 45])
   ```
+
+## ResNet解析
+- resnet架构如"[Deep Residual Learning for Image Recognitin](https://arxiv.org/abs/1512.03385)"所述，由残差块`residual block`堆叠而成，其具体结构如图所示：
+  <div  align="center"> 
+  <img src="../images/ResidualBlock.JPG" width="80%" height="80%">
+  </div >
+  
+
+  其网络整体结构如下：
+  <div  align="center"> 
+  <img src="../images/ResidualNetwork.JPG" width="100%" height="100%">
+  </div >
+
+  具体来说，实验使用较多的为`resnet18`即18层的`resnet`。论文中所有`resnet`均由4个"大"`layer`组成，每个`layer`按结构不同又可以由不同数量的`block`构成。
+  `block`又由卷积层与`batchnorm`层组成。`block`有两种基本结构：`BasicBlock`与`Bottleneck`。
+  - `BasicBlock`含有2层卷积层
+  - `Bottleneck`含有3层卷积层
+  
+  每个卷积层后均使用`batchnorm`进行归一化，具体实现可参考[pytorch源码](https://pytorch.org/docs/stable/_modules/torchvision/models/resnet.html#resnet18)
