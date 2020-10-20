@@ -58,6 +58,30 @@
 
 - `torch.nn.BatchNorm2d(num_features, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)`  
 针对每个channel，给一组映射参数$\alpha$, $\beta$, 长度为`C`
-    - **num_features** —— C from an expected input of size `(N,C,H,W)`
-    - **affine** —— a boolean value that when set to True, this module has learnable affine parameters. Default: `True`
-    - **track_running_stats** —— a boolean value that when set to `True`, this module tracks the running mean and variance, and when set to `False`, this module does not track such statistics and uses batch statistics instead in both training and eval modes if the running mean and variance are None. Default: `True`  
+    - **num_features** - C from an expected input of size `(N,C,H,W)`
+    - **affine** - a boolean value that when set to True, this module has learnable affine parameters. Default: `True`
+    - **track_running_stats** - a boolean value that when set to `True`, this module tracks the running mean and variance, and when set to `False`, this module does not track such statistics and uses batch statistics instead in both training and eval modes if the running mean and variance are None. Default: `True`  
+  
+  ```py
+  import torch
+  import torch.nn as nn
+  w = nn.BatchNorm2d(100)
+  m = nn.BatchNorm2d(100, affine=False)
+  n = nn.BatchNorm2d(100, affine=False, track_running_stats=False)
+  input = torch.randn(20, 100, 35, 45)
+  output_w = w(input)
+  output_m = m(input)
+
+  print(w.state_dict().keys())
+  print(m.state_dict().keys())
+  print(n.state_dict().keys())
+  print(output_m.size())
+  print(output_w.size())
+
+
+  >>> odict_keys(['weight', 'bias', 'running_mean', 'running_var',  'num_batches_tracked'])
+  >>> odict_keys(['running_mean', 'running_var',  'num_batches_tracked'])
+  >>> odict_keys([])
+  >>> torch.Size([20, 100, 35, 45])
+  >>> torch.Size([20, 100, 35, 45])
+  ```
