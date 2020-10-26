@@ -6,6 +6,7 @@
   - [HDF5 数据文件操作](#hdf5-数据文件操作)
   - [glob文件搜索](#glob文件搜索)
   - [assert断言语句](#assert断言语句)
+  - [zip函数](#zip函数)
 
 
 
@@ -105,3 +106,48 @@
   AssertionError: value error
   ```
 
+## zip函数
+- `zip(*iterables)`返回一个元组的迭代器，其中的第 i 个元组包含来自每个参数序列或可迭代对象的第 i 个元素。 当所输入可迭代对象中最短的一个被耗尽时，迭代器将停止迭代。 当只有一个可迭代对象参数时，它将返回一个单元组的迭代器。 不带参数时，它将返回一个空迭代器。
+  > [Python文档](https://docs.python.org/zh-cn/3/library/functions.html#zip)
+
+  ```py
+  def zip(*iterables):
+      # zip('ABCD', 'xy') --> Ax By
+      sentinel = object()
+      iterators = [iter(it) for it in iterables]
+      while iterators:
+          result = []
+          for it in iterators:
+              elem = next(it, sentinel)
+              if elem is sentinel:
+                  return
+              result.append(elem)
+          yield tuple(result)
+  ```
+
+  注意使用`zip(*zipped)`能够将实现同`zip`相反的效果，即将聚合后产生的元组重新拆散为两个列表。
+
+  ```py
+  >>> x = [1, 2, 3]
+  >>> y = [4, 5, 6]
+  >>> zipped = zip(x, y)
+  >>> list(zipped)
+  [(1, 4), (2, 5), (3, 6)]
+  >>> x2, y2 = zip(*zip(x, y))
+  >>> x == list(x2) and y == list(y2)
+  True
+  ```
+
+  此处需注意`*`运算符的作用，将变量`zipped`的元组打散连续输入。即`zip(*zipped)`与`zip(zipped[0], zipped[1],···)`同义，将所有元组的元素按顺序映射，达到与`zip`相反的操作效果。该方法可以用于同时打乱长度相同的不同列表，并且保持列表内映射关系不变。
+
+  ```py
+  import random
+  x = [1,2,3]
+  y = [4,5,6]
+  zipped = list(zip(x,y))
+  random.shuffle(zipped)
+  x2, y2 = zip(*zipped)
+  print(x2,y2)
+
+  >>> (1, 3, 2) (4, 6, 5)
+  ```
