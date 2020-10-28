@@ -18,7 +18,11 @@
   ```python
   class DataLoader(object):
       ...
-      
+      def __iter__(self):
+          return _DataLoaderIter(self)
+
+  class __DataLoaderIter(object):
+      ···
       def __next__(self):
           if self.num_workers == 0:  
               indices = next(self.sample_iter)  # Sampler
@@ -28,7 +32,7 @@
               return batch
   ```
   
-  > pytorch 1.0 document，高版本的dataloader将`__next__()`方法去除了，实现更为复杂，但流程相同。
+  > [pytorch 1.0 document](https://pytorch.org/docs/1.0.0/_modules/torch/utils/data/dataloader.html#DataLoader)，高版本实现更为复杂，但流程相同。
 
 ## CUDA的使用
 - `pytorch`中无论模型的参数还是数据均以`tensor`的形式存储。`tensor`的运算均需要运算数在同一设备中，否则将会报错。
