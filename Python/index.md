@@ -7,6 +7,7 @@
   - [glob文件搜索](#glob文件搜索)
   - [assert断言语句](#assert断言语句)
   - [zip函数](#zip函数)
+  - [pickle存取python数据类型](#pickle存取python数据类型)
 
 
 
@@ -151,3 +152,20 @@
 
   >>> (1, 3, 2) (4, 6, 5)
   ```
+
+## pickle存取python数据类型
+`pickle` 模块能够实现对于 `python` 数据类型如字典、列表等的存取功能
+- `dump` 实现存储功能
+    ```py
+    import pickle
+    data = list[1,2,3]
+    with open('my_file.pkl', 'wb') as f:
+        pickle.dump(data, f)
+    ```
+- `load` 实现读取功能
+    ```py
+    import pickle
+    # "rb" mean open with binary mode
+    with open("my_file.pkl", "rb") as f:
+        data = pickle.load(f)
+    ```
