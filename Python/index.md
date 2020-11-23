@@ -8,6 +8,7 @@
   - [assert断言语句](#assert断言语句)
   - [zip函数](#zip函数)
   - [pickle存取python数据类型](#pickle存取python数据类型)
+  - [decorator装饰器](#decorator装饰器)
 
 
 
@@ -169,3 +170,69 @@
     with open("my_file.pkl", "rb") as f:
         data = pickle.load(f)
     ```
+
+## decorator装饰器
+`装饰器` 放在函数定义前，将修饰的函数视作参数传入装饰器实现特定的功能。
+
+- 普通自定义装饰器
+
+    ```py
+    # 这是装饰函数
+    def timer(func):
+        def wrapper(*args, **kw):
+            t1=time.time()
+            # 这是函数真正执行的地方
+            func(*args, **kw)
+            t2=time.time()
+
+            # 计算下时长
+            cost_time = t2-t1 
+            print("花费时间：{}秒".format(cost_time))
+        return wrapper
+
+    import time
+
+    @timer
+    def want_sleep(sleep_time):
+        time.sleep(sleep_time)
+
+    want_sleep(10)
+    >>> 花费时间：10.0073800086975098秒
+    ```
+
+- 带参数的函数装饰器
+    ```py
+    def say_hello(contry):
+        def wrapper(func):
+            def deco(*args, **kwargs):
+                if contry == "china":
+                    print("你好!")
+                elif contry == "america":
+                    print('hello.')
+                else:
+                    return
+
+                # 真正执行函数的地方
+                func(*args, **kwargs)
+            return deco
+        return wrapper
+    
+    # 小明，中国人
+    @say_hello("china")
+    def xiaoming():
+        pass
+
+    # jack，美国人
+    @say_hello("america")
+    def jack():
+        pass
+
+    xiaoming()
+    print("------------")
+    jack()
+    
+    >>>你好!
+    >>>------------
+    >>>hello.
+    ```
+
