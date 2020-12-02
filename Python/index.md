@@ -236,3 +236,66 @@
     >>>hello.
     ```
 
+- `python` 内置装饰器 `@property`
+  被`@property`修饰的函数视作类的一个属性，属性的值为该函数返回值。实际上该函数为装饰器`property`的一个实例。`property`为一个**描述符类**，基于`python`的**描述符协议**实现函数的装饰。`TestProperty`为模仿其结构的自定义实现。  
+
+  ```py
+  class TestProperty(object):
+    def __init__(self, fget=None, fset=None, fdel=None, doc=None):
+        self.fget = fget
+        self.fset = fset
+        self.fdel = fdel
+        self.__doc__ = doc
+
+    def __get__(self, obj, objtype=None):
+        print("in __get__")
+        if obj is None:
+            return self
+        if self.fget is None:
+            raise AttributeError
+        return self.fget(obj)
+
+    def __set__(self, obj, value):
+        print("in __set__")
+        if self.fset is None:
+            raise AttributeError
+        self.fset(obj, value)
+
+    def __delete__(self, obj):
+        print("in __delete__")
+        if self.fdel is None:
+            raise AttributeError
+        self.fdel(obj)
+
+
+    def getter(self, fget):
+        print("in getter")
+        return type(self)(fget, self.fset, self.fdel, self.__doc__)
+
+    def setter(self, fset):
+        print("in setter")
+        return type(self)(self.fget, fset, self.fdel, self.__doc__)
+
+    def deleter(self, fdel):
+        print("in deleter")
+        return type(self)(self.fget, self.fset, fdel, self.__doc__)
+
+  class Student:
+    def __init__(self, name):
+        self.name = name
+
+    # 其实只有这里改变
+    @TestProperty
+    def math(self):
+        return self._math
+
+    @math.setter
+    def math(self, value):
+        if 0 <= value <= 100:
+            self._math = value
+        else:
+            raise ValueError("Valid value must be in [0, 100]")
+  ```
+  > [王炳明的知乎专栏](https://zhuanlan.zhihu.com/p/269012332)
+  
+  `Student`类中的`math()`定义了两次，第一次将`math()`变为`TestProperty`的一个实例，初始化实现了`self.fget()`方法。第二次使用`@math.setter`修饰重定义`math()`变为`TestProperty`的一个新实例调用`setter()`实现了`self.fget()`与`self.fset()`方法
