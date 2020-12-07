@@ -1,6 +1,7 @@
 # Python学习笔记
 
 - [Python学习笔记](#python学习笔记)
+  - [基本变量类型要点](#基本变量类型要点)
   - [迭代器（iterator）与生成器（generator）](#迭代器iterator与生成器generator)
   - [File open文件操作](#file-open文件操作)
   - [HDF5 数据文件操作](#hdf5-数据文件操作)
@@ -11,7 +12,9 @@
   - [decorator装饰器](#decorator装饰器)
 
 
-
+## 基本变量类型要点
+- `list、dict`为**可变变量**，传入函数中时，如果函数改动了其内容，在函数外部其内容也发生相应改变。
+- `int,string,float,tuple`为**不可变变量**，当改变其值时相当于改变其引用。
 ## 迭代器（iterator）与生成器（generator）
 - 迭代器：指实现了`__next__()`与`__iter__()`方法的对象
 - 生成器：生成器的建立有两种方式：
