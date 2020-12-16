@@ -4,3 +4,4 @@
 - for [Git](https://DingYuan0118.github.io/DingYuan0118.github.io/Git)
 - for [Linux](https://DingYuan0118.github.io/DingYuan0118.github.io/Linux)
 - for [Cpp](https://DingYuan0118.github.io/DingYuan0118.github.io/Cpp)
+- for [Math](https://DingYuan0118.github.io/DingYuan0118.github.io/Math)
