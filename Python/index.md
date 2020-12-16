@@ -9,6 +9,7 @@
   - [zip函数](#zip函数)
   - [pickle存取python数据类型](#pickle存取python数据类型)
   - [decorator装饰器](#decorator装饰器)
+  - [Import注意事项](#import注意事项)
 
 
 
@@ -299,3 +300,8 @@
   > [王炳明的知乎专栏](https://zhuanlan.zhihu.com/p/269012332)
   
   `Student`类中的`math()`定义了两次，第一次将`math()`变为`TestProperty`的一个实例，初始化实现了`self.fget()`方法。第二次使用`@math.setter`修饰重定义`math()`变为`TestProperty`的一个新实例调用`setter()`实现了`self.fget()`与`self.fset()`方法
+
+## Import注意事项 
+- 需要注意的是使用 `from package import item` 方式导入包时，这个子项（item）既可以是包中的一个子模块（或一个子包），也可以是包中定义的其它命名，像函数、类或变量。`import` 语句首先核对是否包中有这个子项，如果没有，它假定这是一个模块，并尝试加载它。如果没有找到它，会引发一个 `ImportError` 异常。
+
+- 相反，使用类似 `import item.subitem.subsubitem` 这样的语法时，这些子项必须是包，最后的子项可以是包或模块，但不能是前面子项中定义的类、函数或变量。
