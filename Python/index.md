@@ -11,6 +11,7 @@
   - [pickle存取python数据类型](#pickle存取python数据类型)
   - [decorator装饰器](#decorator装饰器)
   - [Import注意事项](#import注意事项)
+  - [可变与不可变对象](#可变与不可变对象)
 
 
 ## 基本变量类型要点
@@ -308,3 +309,13 @@
 - 需要注意的是使用 `from package import item` 方式导入包时，这个子项（item）既可以是包中的一个子模块（或一个子包），也可以是包中定义的其它命名，像函数、类或变量。`import` 语句首先核对是否包中有这个子项，如果没有，它假定这是一个模块，并尝试加载它。如果没有找到它，会引发一个 `ImportError` 异常。
 
 - 相反，使用类似 `import item.subitem.subsubitem` 这样的语法时，这些子项必须是包，最后的子项可以是包或模块，但不能是前面子项中定义的类、函数或变量。
+
+## 可变与不可变对象
+`python`默认的参数传递均为**引用传递(pass by reference)**，即直接传入对象地址。此时对象的性质决定程序的行为。
+
+- 当对象为不可变对象(tuple、string、int、float、bool等)时，改变对象的属性值将会**创建一个新的对象**，而不改变原来内存上该对象的值。
+
+- 对象为可变对象时(list, dict等)时，改变对象的属性值将会直接在对象原有内存上改动，不会创建新的对象，因此**所有指向该对象的变量**均会被**改变**。
+
+正常自定义类别的对象，其属性均是可变的。因此，当以类的对象作为参数传入函数时，均视为可变对象。
+>如何定义不可变对象可参考[How to make an immutable object in Python?](https://stackoverflow.com/questions/4828080/how-to-make-an-immutable-object-in-python)
