@@ -5,6 +5,8 @@
   - [CUDA的使用](#cuda的使用)
   - [Batchnormal层的使用](#batchnormal层的使用)
   - [ResNet解析](#resnet解析)
+  - [Performance Tuning Guide](#performance-tuning-guide)
+  - [Parameters与Buffer的区别](#parameters与buffer的区别)
 
 ## dataloader与dataset
 - dataloader与dataset之间的调用关系如图
@@ -109,3 +111,29 @@
   - `Bottleneck`含有3层卷积层
   
   每个卷积层后均使用`batchnorm`进行归一化，具体实现可参考[pytorch源码](https://pytorch.org/docs/stable/_modules/torchvision/models/resnet.html#resnet18)
+
+
+## Performance Tuning Guide 
+> 参考[pytorch tutorial](https://pytorch.org/tutorials/recipes/recipes/tuning_guide.html)
+- **Enable async data loading and augmentation**: set the `num_workers` > 0, if use GPU traninig, better set the `pin_memory=True`
+
+- **Disable gradient calculation for validation or inference**: use torch.no_grad() context manager
+
+- **Disable bias for convolutions directly followed by a batch norm**: if a conv layer followed by a batch norm layer, use `nn.Conv2d(..., bias=False, ....)` to disable the bias compute.
+
+- **Avoid unnecessary CPU-GPU synchronization**: When possible, avoid operations which require synchronizations, for example:
+  - print(cuda_tensor)
+  - cuda_tensor.item()
+  - memory copies: tensor.cuda(), cuda_tensor.cpu() and equivalent tensor.to(device) calls
+  - cuda_tensor.nonzero()
+  - python control flow which depends on results of operations performed on cuda tensors e.g. if (cuda_tensor != 0).all()
+
+- **Create tensors directly on the target device**:use `torch.rand(size, device=torch.device('cuda'))` instead of `torch.rand(size).cuda()`
+
+## Parameters与Buffer的区别
+- `parameters`记录反向传播时需要`optimizer`更新的参数
+- `buffer`记录反向传播时不需要`optimizer`更新的参数
+
+二者均记录至`model.state_dict()`方法中，`state_dict()`返回一个`OrderedDict`，其中存储着模型的所有参数.
+
+- `register_parameter()`与`register_buffer()`用于将自定义的参数手动添加至`OrderedDict`中
