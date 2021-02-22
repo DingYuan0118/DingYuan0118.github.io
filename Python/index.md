@@ -12,6 +12,7 @@
   - [decorator装饰器](#decorator装饰器)
   - [Import注意事项](#import注意事项)
   - [可变与不可变对象](#可变与不可变对象)
+  - [python自定义包的安装以及setup.py的使用](#python自定义包的安装以及setuppy的使用)
 
 
 ## 基本变量类型要点
@@ -74,6 +75,40 @@
   isgenerator(obj)
   ```
 
+- 实际上任何一个类，如果实现了`__getitem__` 方法，那么当调用 iter(类实例) 时候会自动具备`__iter__` 和 `__next__`方法，从而可迭代了。  
+  
+  通过下面例子可以看出，`__getitem__` 实际上是属于 `iter`和`next` 方法的高级封装，也就是我们常说的语法糖，只不过这个转化是通过编译器完成，内部自动转化，非常方便。
+  ```python
+  class A(object):
+    def __init__(self):
+        self.a = [1, 2, 3]
+
+    def __getitem__(self, item):
+        return self.a[item]
+
+    cls_a = A()
+    print(isinstance(cls_a, Iterable))  # False
+    print(isinstance(cls_a, Iterator))  # False
+    print(dir(cls_a))  # 仅仅具备 __getitem__ 方法
+
+    cls_a = iter(cls_a)
+    print(dir(cls_a))  # 具备 __iter__ 和 __next__ 方法
+
+    print(isinstance(cls_a, Iterable))  # True
+    print(isinstance(cls_a, Iterator))  # True
+
+    # 等价于 for .. in ..
+    while True:
+        try:
+            # 然后调用对象的 __next__ 方法，不断返回元素
+            value = next(cls_a)
+            print(value)
+        # 如果迭代完成，则捕获异常即可
+        except StopIteration:
+            break
+
+    # 输出： 1 2 3
+  ```
 ## File open文件操作
 - `file.write(str)`写入字符串
 - `file.writelines(sequence)`写入序列字符串列表
@@ -319,3 +354,13 @@
 
 正常自定义类别的对象，其属性均是可变的。因此，当以类的对象作为参数传入函数时，均视为可变对象。
 >如何定义不可变对象可参考[How to make an immutable object in Python?](https://stackoverflow.com/questions/4828080/how-to-make-an-immutable-object-in-python)
+
+
+## python自定义包的安装以及setup.py的使用
+>资料主要参考[知乎王炳明](https://zhuanlan.zhihu.com/p/276461821)
+
+- python包的分发方式：  
+  - 源码包分发：即直接将整个包**打包**为一个`zip`或其他压缩格式，命令为`python setup.py sdist`，通过`pip install`命令可以直接安装在虚拟环境的`site-packges`文件夹中，该方式由于需要在本地编译形成`.pyc`文件，因此较二进制方式慢，但是由于其直接将源码结构导入到了`site-packges`文件夹中，因此可以通过`pylance`等插件智能查询。
+  
+  - 二进制分发(主要有两种格式`egg, whl`)：其本质上也是一个**压缩包**，命令为`python setup.py bdist_egg`或`python setup.py bdist_whl`，只不过`egg`格式中提前将源码按解释器版本**编译好形成`.pyc`文件后**再进行打包，而`whl`**只将源码**进行打包。`egg`格式通过`easy_install`安装在`site-packges`文件夹中(形式表现为一个`.egg`文件)，而`whl`格式通过`pip install`安装，其形式与以源码安装结构一致，其包含源码能够通过智能跳转等方式被`pylance`等第三方语言插件找到，而`.egg`格式不行。（个人不理解为什么称`whl`为二进制方式，因为它并没有提前编译)
+
