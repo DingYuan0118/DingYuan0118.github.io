@@ -13,6 +13,7 @@
   - [Import注意事项](#import注意事项)
   - [可变与不可变对象](#可变与不可变对象)
   - [python自定义包的安装以及setup.py的使用](#python自定义包的安装以及setuppy的使用)
+  - [python中的抽象基类ABCs(Abstract Base Classes)](#python中的抽象基类abcsabstract-base-classes)
 
 
 ## 基本变量类型要点
@@ -364,3 +365,71 @@
   
   - 二进制分发(主要有两种格式`egg, whl`)：其本质上也是一个**压缩包**，命令为`python setup.py bdist_egg`或`python setup.py bdist_whl`，只不过`egg`格式中提前将源码按解释器版本**编译好形成`.pyc`文件后**再进行打包，而`whl`**只将源码**进行打包。`egg`格式通过`easy_install`安装在`site-packges`文件夹中(形式表现为一个`.egg`文件)，而`whl`格式通过`pip install`安装，其形式与以源码安装结构一致，其包含源码能够通过智能跳转等方式被`pylance`等第三方语言插件找到，而`.egg`格式不行。（个人不理解为什么称`whl`为二进制方式，因为它并没有提前编译)
 
+
+## python中的抽象基类ABCs(Abstract Base Classes)  
+- 抽象基类一般用于检测自定义类别是否含有特定接口，一般是各个类别的父类(*base class*)。`collections`模块中不仅包含各种派生于抽象基类的具体类别，如`namedtuple, OrderedDict`等，在其子模块`collections.abc`中还包含了各种内置的抽象基类(如`Iterable, Hashable`)等等。一般用作`issubclass, isinstance`检测。  
+
+- `abc`模块提供了`ABCmeta`元类用于生成抽象基类。使用`ABCMeta`元类创建的抽象基类有以下方法：
+  - `register(subclass)`: 将`subclass`注册为本抽象基类的一个“虚拟子类”(*virtual subclass*)。注册后使用`issubclass`将返回`True`  
+  ```py
+    from abc import ABC
+    class MyABC(ABC):
+        pass
+    MyABC.register(tuple)
+    print(issubclass(tuple, MyABC))
+    print(isinstance((), MyABC))
+
+    >>> True
+    >>> True
+  ```
+  - `__subclasshook__(subclass)`: (必须定义为类方法)检查 `subclass` 是否被认为是这个 ABC 的子类。如果返回 `True` 则认为是该 ABC 子类，`False` 则认为其不是该 ABC 子类。`NotImplemented` 则使用通常机制后续进行子类检查。
+  ```py
+    from abc import ABC, abstractmethod
+    class Foo:
+        def __getitem__(self, index):
+            ...
+        def __len__(self):
+            ...
+        def get_iterator(self):
+            return iter(self)
+
+    class Boo:
+        def __getitem__(self, index):
+            ...
+        def __len__(self):
+            ...
+        def get_iterator(self):
+            return iter(self)    
+        def __iter__(self):
+            pass
+
+    class MyIterable(ABC):
+
+        @abstractmethod
+        def __iter__(self):
+            while False:
+                yield None
+
+        def get_iterator(self):
+            return self.__iter__()
+
+        @classmethod
+        def __subclasshook__(cls, C):
+            if cls is MyIterable:
+                if any("__iter__" in B.__dict__ for B in C.__mro__):
+                    return True
+            return NotImplemented
+
+    print(issubclass(Foo, MyIterable))
+    print(issubclass(Boo, MyIterable))
+    MyIterable.register(Foo)
+    print(issubclass(Foo, MyIterable))
+
+    >>> False
+    >>> True
+    >>> True
+  ```
+  其中`__mro__`属性记录了本类别以及其继承类别的先后顺序，保证其中包含的类别不重复，并且不会出现倒置显现（某一类别的先祖出现在该类别之前）
+  > [stackoverflow: what does "mro()" do?](https://stackoverflow.com/questions/2010692/what-does-mro-do)  
+
+  该示例显示了，只要一个类实现了或继承的类别中实现了`__iter__`方法，则认为该类是`MyIterable`的子类。
