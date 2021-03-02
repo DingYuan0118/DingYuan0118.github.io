@@ -7,6 +7,7 @@
   - [UEFI与传统BIOS](#uefi与传统bios)
   - [终端复用器tmux使用教程](#终端复用器tmux使用教程)
   - [shell使用技巧](#shell使用技巧)
+  - [bash的环境变量配置文件](#bash的环境变量配置文件)
 
 
 ## vim编辑器常用使用指令
@@ -90,3 +91,7 @@ tmux快捷键较为特别，其所有快捷键均需要一个前缀键激活`ctr
 - shell中双引号`"`下特殊字符可以保持原有的特性，如：`var="lang is $LANG"` 则 `echo $var` 可得 `lang is en_US.UTF-8`
 - shell中单引号`'`下的变量内容只是纯文本，如`var="lang is $LANG"` 则 `echo $var` 可得 `lang is $LANG`
 - shell中反单引号下指令可以提前实现，如：**cd /lib/modules/&#96;uname -r&#96;/kernel**与**cd /lib/modules/$(uname -r)/kernel**是相同效果
+
+## bash的环境变量配置文件
+- **login shell**：即需要输入账户密码登录的shell。其会按顺序优先级读取`~/.bash_profil, ~/.bash_login, ~/.profile`三个中的一个
+- **non-login shell**：只读取`~/.bashrc`
