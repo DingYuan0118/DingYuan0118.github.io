@@ -6,6 +6,7 @@
   - [GPT与MBR磁盘格式](#gpt与mbr磁盘格式)
   - [UEFI与传统BIOS](#uefi与传统bios)
   - [终端复用器tmux使用教程](#终端复用器tmux使用教程)
+  - [shell使用技巧](#shell使用技巧)
 
 
 ## vim编辑器常用使用指令
@@ -84,3 +85,8 @@ tmux快捷键较为特别，其所有快捷键均需要一个前缀键激活`ctr
 
 
 > 主要参考[阮一峰的网络日志](https://www.ruanyifeng.com/blog/2019/10/tmux.html)  
+
+## shell使用技巧
+- shell中双引号`"`下特殊字符可以保持原有的特性，如：`var="lang is $LANG"` 则 `echo $var` 可得 `lang is en_US.UTF-8`
+- shell中单引号`'`下的变量内容只是纯文本，如`var="lang is $LANG"` 则 `echo $var` 可得 `lang is $LANG`
+- shell中反单引号下指令可以提前实现，如：**cd /lib/modules/&#96;uname -r&#96;/kernel**与**cd /lib/modules/$(uname -r)/kernel**是相同效果
