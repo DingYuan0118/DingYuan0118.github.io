@@ -82,7 +82,9 @@ tmux安装使用方法：
 
 - 快捷键部分  
 tmux快捷键较为特别，其所有快捷键均需要一个前缀键激活`ctrl+b`，激活后才能正常使用。举例来说助命令的快捷键是`Ctrl+b, ?`。它的用法是，在 Tmux 窗口中，先按下`Ctrl+b`，再按下`?`，就会显示帮助信息。  
-![主要快捷键](../images/tmux快捷键.png)
+  <div  align="center"> 
+  <img src="../images/tmux快捷键.jpg" width="100%" height="100%">
+  </div >
 
 
 > 主要参考[阮一峰的网络日志](https://www.ruanyifeng.com/blog/2019/10/tmux.html)  
@@ -90,7 +92,7 @@ tmux快捷键较为特别，其所有快捷键均需要一个前缀键激活`ctr
 ## shell使用技巧
 - shell中双引号`"`下特殊字符可以保持原有的特性，如：`var="lang is $LANG"` 则 `echo $var` 可得 `lang is en_US.UTF-8`
 - shell中单引号`'`下的变量内容只是纯文本，如`var="lang is $LANG"` 则 `echo $var` 可得 `lang is $LANG`
-- shell中反单引号下指令可以提前实现，如：**cd /lib/modules/&#96;uname -r&#96;/kernel**与**cd /lib/modules/$(uname -r)/kernel**是相同效果
+- shell中反单引号下指令可以提前实现，如：**cd /lib/modules/&#96;uname -r&#96;/kernel**与**cd /lib/modules/&#36;(uname -r)/kernel**是相同效果，功能与 `$()` 相似，区别在于反单引号下使用转义需要两个反斜杠`\\`，而`$()`只需要一个。
 
 ## bash的环境变量配置文件
 - **login shell**：即需要输入账户密码登录的shell。其会按顺序优先级读取`~/.bash_profil, ~/.bash_login, ~/.profile`三个中的一个
