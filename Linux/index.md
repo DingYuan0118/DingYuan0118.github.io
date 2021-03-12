@@ -95,5 +95,11 @@ tmux快捷键较为特别，其所有快捷键均需要一个前缀键激活`ctr
 - shell中反单引号下指令可以提前实现，如：**cd /lib/modules/&#96;uname -r&#96;/kernel**与**cd /lib/modules/&#36;(uname -r)/kernel**是相同效果，功能与 `$()` 相似，区别在于反单引号下使用转义需要两个反斜杠`\\`，而`$()`只需要一个。
 
 ## bash的环境变量配置文件
+首先从`/etc/profile`中读取全局文件后，根据`login shell`与`non-login shell`分别读取相应个性化配置.
+
 - **login shell**：即需要输入账户密码登录的shell。其会按顺序优先级读取`~/.bash_profil, ~/.bash_login, ~/.profile`三个中的一个
 - **non-login shell**：只读取`~/.bashrc`
+
+<div  align="center"> 
+<img src="../images/shell环境变量.jpg" width="100%" height="100%">
+</div >
