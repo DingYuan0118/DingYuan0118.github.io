@@ -5,6 +5,7 @@
   - [TCP/IP协议簇](#tcpip协议簇)
   - [正向代理与反向代理](#正向代理与反向代理)
   - [web服务器与web框架以及web应用的区别](#web服务器与web框架以及web应用的区别)
+  - [密钥加密过程](#密钥加密过程)
 
 ## HTTP协议：
 *HTTP(hyper text transfer protocal)* **超文本传输协议**，是网络服务端与客户端之间用于传输**超文本(语音、视频、超链接)**的一种协议。通过对于不同 *request* 请求，响应不同的传输内容。
@@ -43,3 +44,9 @@
 - **web服务器**：一般用于接受浏览器发送的 *HTTP request* 并返回相应 *response*。主要功能在于维护客户端与服务端信息通道，主要挑战在于大量数据的同时并发处理。
 - **web框架**：主要用于开发**web应用**，实现业务逻辑。
 - **web应用**：根据**web服务器**接受的请求，确定要返回的内容，并将其传给**web服务器**
+
+## 密钥加密过程
+>[fucking-algorithm](https://github.com/labuladong/fucking-algorithm/blob/master/%E6%8A%80%E6%9C%AF/%E5%AF%86%E7%A0%81%E6%8A%80%E6%9C%AF.md)
+  <div  align="center"> 
+  <img src="../images/非对称密钥加密过程.jpg" width="100%" height="100%">
+  </div >
