@@ -9,7 +9,7 @@
   - [密钥加密过程](#密钥加密过程)
 
 ## HTTP协议：
-*HTTP(hyper text transfer protocol)* **超文本传输协议**，是网络服务端与客户端之间用于传输**超文本(语音、视频、超链接)**的一种协议。通过对于不同 *request* 请求，响应不同的传输内容。
+*HTTP(hyper text transfer protocol)* **超文本传输协议**，是网络服务端与客户端之间用于传输 **超文本(语音、视频、超链接)** 的一种协议。通过对于不同 *request* 请求，响应不同的传输内容。
 
 - *status code*:
   - 200: OK,表示 *request* 请求正常被接受。
