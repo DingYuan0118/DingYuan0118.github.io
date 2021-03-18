@@ -40,13 +40,13 @@
 - **TCP header**  
   如图所示，数据在不同层级名字有所不同，同一个数据包在应用层、传输层、网络层、链接层的名称分别为：包(`Packet`)、段(`Segment`)、包(`Packet`)、帧(`Frame`)。有时为了方便，可统称为数据包。
   
-  ![TCPheader](..\images\TCPheader.JPG)
+  ![TCPheader](../images/TCPheader.JPG)
   
   **TCP header** 具体结构如下图所示 
   
   > [MrPeak杂货铺](https://zhuanlan.zhihu.com/p/25766448)
   
-  ![TCPheader_2](..\images\TCPheader_2.JPG)
+  ![TCPheader_2](../images/TCPheader_2.JPG)
   
   一个**TCP header**一般含有20个字节，分5行，每行4个字节。第一行记录发送端端口号以及接收端端口号，每个端口号各占两个字节，即TCP一共可以使用 `2^16 = 65536`个端口。第二、三行的*Sequence Number*和*ACK number*以及第四行的各种Flag用于建立和断开TCP连接。
 ## 正向代理与反向代理
