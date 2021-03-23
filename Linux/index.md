@@ -82,9 +82,9 @@ tmux安装使用方法：
 
 - 快捷键部分  
 tmux快捷键较为特别，其所有快捷键均需要一个前缀键激活`ctrl+b`，激活后才能正常使用。举例来说助命令的快捷键是`Ctrl+b, ?`。它的用法是，在 Tmux 窗口中，先按下`Ctrl+b`，再按下`?`，就会显示帮助信息。  
-  <div  align="center"> 
-  <img src="../images/tmux快捷键.jpg" width="100%" height="100%">
-  </div >
+
+  ![tmux快捷键](../images/tmux快捷键.jpg)
+
 
 
 > 主要参考[阮一峰的网络日志](https://www.ruanyifeng.com/blog/2019/10/tmux.html)  
@@ -99,7 +99,5 @@ tmux快捷键较为特别，其所有快捷键均需要一个前缀键激活`ctr
 
 - **login shell**：即需要输入账户密码登录的shell。其会按顺序优先级读取`~/.bash_profil, ~/.bash_login, ~/.profile`三个中的一个
 - **non-login shell**：只读取`~/.bashrc`
-
-<div  align="center"> 
-<img src="../images/shell环境变量.jpg" width="100%" height="100%">
-</div >
+ 
+![shell environment](../images/shell环境变量.jpg)
