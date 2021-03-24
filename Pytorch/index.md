@@ -36,6 +36,8 @@
   
   > [pytorch 1.0 document](https://pytorch.org/docs/1.0.0/_modules/torch/utils/data/dataloader.html#DataLoader)，高版本实现更为复杂，但流程相同。
 
+- `daloader`的`__len__`属性等于该`dataloader`内部`Batch_Sampler`的长度。因此，如果自定义`Batch_sampler`则需要直接指明其`__len__`属性以便告知一个`epoch`内需要迭代多少次。如果使用默认的`Batch_sampler`则其`__len__`属性值为`sampler`的`__len__`属性值除以`batch_size`，而`sampler`的`__len__`属性值等于`dataset`的`__len__`属性，因此默认`Batch_Sampler`的`__len__`属性值为`dataset.__len__`除以`batch_size`。
+
 ## CUDA的使用
 - `pytorch`中无论模型的参数还是数据均以`tensor`的形式存储。`tensor`的运算均需要运算数在同一设备中，否则将会报错。
 
