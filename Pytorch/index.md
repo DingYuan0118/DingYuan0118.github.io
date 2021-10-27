@@ -7,6 +7,7 @@
   - [ResNet解析](#resnet解析)
   - [Performance Tuning Guide](#performance-tuning-guide)
   - [Parameters与Buffer的区别](#parameters与buffer的区别)
+  - [常用画图函数](#常用画图函数)
 
 ## dataloader与dataset
 - dataloader与dataset之间的调用关系如图
@@ -47,7 +48,6 @@
   b = torch.tensor([2,3,4,5], device=torch.device("cpu"))
   c = a + b
 
-  ---------------------------------------------------------------------------
   RuntimeError                              Traceback (most recent call last)
   <ipython-input-1-3317b81b183d> in <module>
         2 a = torch.tensor([1,2,3,4], device=torch.device('cuda'))
@@ -55,7 +55,6 @@
   ----> 4 c = a + b
 
   RuntimeError: expected device cuda:0 but got device cpu
-  ---------------------------------------------------------------------------
 
   c = a + b.cuda()
   c
@@ -139,3 +138,32 @@
 二者均记录至`model.state_dict()`方法中，`state_dict()`返回一个`OrderedDict`，其中存储着模型的所有参数.
 
 - `register_parameter()`与`register_buffer()`用于将自定义的参数手动添加至`OrderedDict`中
+
+## 常用画图函数
+
+```py
+import matplotlib.pyplot as plt
+def plot(imgs, with_orig=True, row_title=None, **imshow_kwargs):
+    if not isinstance(imgs[0], list):
+        # Make a 2d grid even if there's just 1 row
+        imgs = [imgs]
+
+    num_rows = len(imgs)
+    num_cols = len(imgs[0]) + with_orig
+    fig, axs = plt.subplots(nrows=num_rows, ncols=num_cols, squeeze=False)
+    for row_idx, row in enumerate(imgs):
+        row = [orig_img] + row if with_orig else row
+        for col_idx, img in enumerate(row):
+            ax = axs[row_idx, col_idx]
+            ax.imshow(np.asarray(img), **imshow_kwargs)
+            ax.set(xticklabels=[], yticklabels=[], xticks=[], yticks=[])
+
+    if with_orig:
+        axs[0, 0].set(title='Original image')
+        axs[0, 0].title.set_size(8)
+    if row_title is not None:
+        for row_idx in range(num_rows):
+            axs[row_idx, 0].set(ylabel=row_title[row_idx])
+
+    plt.tight_layout()
+```
