@@ -8,6 +8,7 @@
   - [Performance Tuning Guide](#performance-tuning-guide)
   - [Parameters与Buffer的区别](#parameters与buffer的区别)
   - [常用画图函数](#常用画图函数)
+  - [如何快速对模型指定层进行操作？](#如何快速对模型指定层进行操作)
 
 ## dataloader与dataset
 - dataloader与dataset之间的调用关系如图
@@ -167,3 +168,27 @@ def plot(imgs, with_orig=True, row_title=None, **imshow_kwargs):
 
     plt.tight_layout()
 ```
+
+## 如何快速对模型指定层进行操作？  
+通过将`func` 与 `model.apply` 方法联合使用，可以达到对网络中同一类别的层进行指定操作。
+
+- 以将训练时网络中所有 `BN` 层的 `training` 属性置为 `False` 为例  
+  
+  ```py
+    import torch.nn as nn
+    def freeze_bn(m):
+        if isinstance(m, nn.BatchNorm2d):
+            m.eval()
+
+    model.apply(freeze_bn)
+  ```
+  `model.apply(func)` 方法会将 `func` **递归地**对**每个子模块**进行调用，从而实现将所有`BN` 层的 `training` 属性置为 `False`。同理，可使用
+  ```py
+    import torch.nn as nn
+    def activate_bn(m):
+        if isinstance(m, nn.BatchNorm2d):
+            m.train()
+
+    model.apply(freeze_bn)
+  ```
+  将模型所有 `BN` 层的 `training` 属性重新置为 `True`。
