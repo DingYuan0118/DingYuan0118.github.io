@@ -141,7 +141,7 @@
   ```py
   assert 1==2 , "value error"
 
-  ----------
+
   AssertionError                            Traceback (most recent call last)
   <ipython-input-1-a43ee3a2371b> in <module>
   ----> 1 assert 1==2 , "value error"
