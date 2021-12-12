@@ -10,3 +10,4 @@
 - for [Network](https://dingyuan0118.github.io/Network)
 - for [opensource](https://dingyuan0118.github.io/OpenSource)
 - for [Language difference](https://dingyuan0118.github.io/LangDif)
+- for [vscode usage](https://dingyuan0118.github.io/Vscode)
