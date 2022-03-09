@@ -8,6 +8,7 @@
   - [终端复用器tmux使用教程](#终端复用器tmux使用教程)
   - [shell使用技巧](#shell使用技巧)
   - [bash的环境变量配置文件](#bash的环境变量配置文件)
+  - [Unicode 与 UTF8 编码的关系](#unicode-与-utf8-编码的关系)
 
 
 ## vim编辑器常用使用指令
@@ -101,3 +102,15 @@ tmux快捷键较为特别，其所有快捷键均需要一个前缀键激活`ctr
 - **non-login shell**：只读取`~/.bashrc`
  
 ![shell environment](../images/shell环境变量.jpg)
+
+## Unicode 与 UTF8 编码的关系
+> [现代编码模型](https://cloud.tencent.com/developer/article/1470820)
+
+- 现代编码模型将字符编码为bit表示需经过一下几个步骤：
+  -  1、需要知道一个系统内支持的字符集合，称为**字符表(Character repertoire)**
+  -  2、给每个字符设定一个整数的映射，这种映射称为**编码字符集(CCS, Coded Character Set)**，**Unicode 编码字符集**属于这一层级的概念。
+  -  3、需要将映射后的整数在计算机中表示为二进制的bit位，该对应关系被称为**字符编码表(CEF, Character Encoding Form)**，UTF-8，UTF-16均属于该层。朴素的想法是将整数直接以二进制表示为bit位，但这就需要以固定的位数表示所有字符，浪费空间。为了支持以可变字节数表示字符，UTF-8有以下映射关系，其中每个字符开头字节1的个数代表了表示该字符所需的字节数。可以发现UTF-8在编码ASCII字符集时(即码点值<0x7F)是以一个字节进行编码的，因此能够完全兼容ASCII字符集。
+  ![UTF-8](../images/UTF-8.png)
+- UTF-8 编码汉字的一个示例，来自[阮一峰的网络日志](https://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html)
+
+    >> 已知“严”的unicode是4E25（100111000100101），根据上表，可以发现4E25处在第三行的范围内（0000 0800-0000 FFFF），因此“严”的UTF-8编码需要三个字节，即格式是“1110xxxx 10xxxxxx 10xxxxxx”。然后，从“严”的最后一个二进制位开始，依次从后向前填入格式中的x，多出的位补0。这样就得到了，“严”的UTF-8编码是“11100100 10111000 10100101”，转换成十六进制就是0xE4B8A5。
