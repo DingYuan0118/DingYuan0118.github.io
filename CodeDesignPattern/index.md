@@ -50,3 +50,21 @@ func TranferStateMachineByCurrentStatus {
 - 调用三方接口时需要考虑成功、失败两种业务正常情况处理以及超市等异常情况处理。超时通常panic等待重试
 - 修改流程时需要考虑旧数据的兼容问题
 - 新流程设计时需要考虑异常数据的问题，通常有字符->int, 空字符，非法字符，大小写等问题
+
+## 自驱状态机设计
+- 当一个状态机转换无需外部信号，可以自发推进至终态时，可以设计一个 `自驱状态机`，通过将状态与每个状态下固定的动作绑定，能够很好模拟实现预先设计的状态机转换推进。
+- 状态机结构设计如下
+  ![Alt text](image.png)
+
+- 提供 Drive 方法自主推进或重试推进状态
+  ```golang
+  // Drive 自驱推进至终态
+  func (s *SelfDriveStateMachineImpl) Drive(ctx context.Context, params interface{}) {
+      if s.curState == nil {
+          panic(fmt.Sprintf("CurState is nil. Please set curstate."))
+      }
+      for !s.curState.IsFinal() {
+          s.Next(ctx, params)
+      }
+  }
+  ```
