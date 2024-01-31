@@ -12,3 +12,4 @@
 - for [Language difference](https://dingyuan0118.github.io/LangDif)
 - for [vscode usage](https://dingyuan0118.github.io/Vscode)
 - for [code design parttern](https://dingyuan0118.github.io/CodeDesignPattern)
+- for [redis](https://dingyuan0118.github.io/Redis)
